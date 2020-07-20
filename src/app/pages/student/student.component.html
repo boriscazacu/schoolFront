@@ -1,0 +1,43 @@
+<nz-table #basicTable [nzData]="listOfData" nzHideOnSinglePage>
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>First Name</th>
+        <th>Last Name</th>
+        <th>Sex</th>
+        <th>Grupa</th>
+        <th>Action</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let data of basicTable.data">
+        <td>{{ data.id }}</td>
+        <td>{{ data.firstName }}</td>
+        <td>{{ data.lastName }}</td>
+        <td>{{ data.sex }}</td>
+        <td>{{ data.grupa }}</td>
+
+        <td>
+          <button nz-button [nzType]="'primary'" (click)="showModal(data.id)"><span>Edit</span></button>
+          <nz-modal [(nzVisible)]="isVisible" nzTitle="Update" (nzOnCancel)="handleCancel()" (nzOnOk)="handleOk()">
+            <form nz-form >
+              <nz-form-item>
+                <nz-form-control [nzSpan]="16">
+                    <nz-form-label [nzSpan]="10" nzFor="email">ID</nz-form-label>
+                    <input nz-input name="id" type="email"  [(ngModel)]="value"  value="{{ data.id }}"><br>
+                    <nz-form-label [nzSpan]="10" nzFor="email">First Name</nz-form-label>
+                    <input nz-input name="fname" type="email" id="email" value="{{ data.firstName }}"><br>
+                    <nz-form-label [nzSpan]="10" nzFor="email">Last Name</nz-form-label>
+                    <input nz-input name="lname" type="email" id="email" value="{{ data.lastName }}"><br>
+                    <nz-form-label [nzSpan]="10" nzFor="email">Sex</nz-form-label>
+                    <input nz-input name="sex" type="email" id="email" value="{{ data.sex }}">   <br>               
+                 </nz-form-control>
+              </nz-form-item >
+            </form>
+          </nz-modal>
+          <button nz-button nzType="primary" nzDanger (click)="delete(data.id)">Delete</button>
+        </td>
+      </tr>
+    </tbody>
+  </nz-table>
+

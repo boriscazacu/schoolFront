@@ -1,0 +1,14 @@
+[nz-button] {
+    margin-right: 8px;
+    margin-bottom: 12px;
+  }
+[nz-form] {
+  max-width: 600px;
+}
+[nz-table]{
+  background-color: red;
+}
+.nz-form-label{
+margin-top: 10px;
+margin-left: 100px;
+}
