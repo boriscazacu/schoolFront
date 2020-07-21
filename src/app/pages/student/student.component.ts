@@ -1,50 +1,25 @@
 import { Component, OnInit } from '@angular/core';
 import { StudentService } from '../services/student.service';
 import { Student } from '../models/student';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { ReactiveFormsModule , FormGroup, NgForm, FormControl, Validators } from '@angular/forms';
 
-interface Person {
-  id: string;
-  firstName: string;
-  lastName: string;
-  sex: string;
-  grupa: string;
-}
 
 @Component({
   selector: 'app-student',
   templateUrl: './student.component.html',
   styleUrls: ['./student.component.css']
 })
+
+
+
 export class StudentComponent implements OnInit {
   isVisible = false;
+  addIsVisible = false;
   studentList: Student[] = [];
-
-  listOfData: Person[] = [
-    {
-      id: '1',
-      firstName: 'John',
-      lastName: 'Brown',
-      sex:'M',
-      grupa: 'New York'
-    },
-    {
-      id: '2',
-      firstName: 'Jim ',
-      lastName: 'Green',
-      sex:'M',
-      grupa: 'London'
-    },
-    {
-      id: '3',
-      firstName: 'Joe ',
-      lastName: 'Black',
-      sex:'M',
-      grupa: 'Sidney '
-    }
-  ];
+  student: Student[] = [];
 
   constructor(private service: StudentService) { }
+
 
   ngOnInit(): void {
     this.service.getList().then(data => {this.studentList = data; console.log(this.studentList); }
@@ -56,21 +31,83 @@ export class StudentComponent implements OnInit {
     ).catch(e => this.service.getList().then(r => this.studentList = r));
   }
 
+  adding(student: Student){
+    this.service.add(student).then(data => console.log(data)
+    ).catch(e => this.service.getList().then(r => this.studentList = r));
+  }
+  updating(student: Student){
+    this.service.update(student).then(data => console.log(data)
+    ).catch(e => this.service.getList().then(r => this.studentList = r));
+  }
 
   
-  // Modal
-  showModal(): void {
-    this.isVisible = true;    
+  //------------------------------------------------- Modal
+  showModal(id: number): void {
+    this.isVisible = true;  
+    this.studentList.forEach(element => {
+      if (id == element.id){
+        this.student.push(element);
+      }
+    });
+    
   }
-  value?: string;
+
+  addModal():void{
+    this.addIsVisible = true;
+    this.clearForm();
+  }
   handleOk(): void {
-    console.log('Button ok clicked!'+this.value);
     this.isVisible = false;
+    this.submitForm();    
+  }
+  addHandleOk(): void{
+    this.addIsVisible = false;
+    this.onFormSubmit();
   }
 
   handleCancel(): void {
-    console.log('Button cancel clicked!');
     this.isVisible = false;
+    this.addIsVisible = false;
   }
 
-}
+
+
+  //-------------------------------------------------------------- Forms
+  angForm = new FormGroup({
+    id: new FormControl('', Validators.required),
+    fname: new FormControl('', Validators.required),
+    lname: new FormControl('', Validators.required),
+    sex: new FormControl('', Validators.required),
+    idGr: new FormControl('', Validators.required),
+  });
+
+  get id(): any {
+    return this.angForm.get('id');
+  }
+  get fname(): any {
+    return this.angForm.get('fname');
+  }
+  get lname(): any {
+    return this.angForm.get('lname');
+  }
+  get sex(): any {
+    return this.angForm.get('sex');
+  } 
+  get idGr(): any {
+    return this.angForm.get('idGr');
+  } 
+  
+  clearForm(): void{
+    this.angForm.reset();
+  }
+  submitForm(): void{
+    this.updating(new Student(this.angForm.get('id').value,this.angForm.get('fname').value, 
+    this.angForm.get('lname').value,this.angForm.get('sex').value,null));
+  }
+  onFormSubmit(): void {
+    this.adding(new Student(null,this.angForm.get('fname').value, this.angForm.get('lname').value,
+    this.angForm.get('sex').value,this.angForm.get('idGr').value));
+  }
+    
+  }
+

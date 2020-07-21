@@ -1,0 +1,86 @@
+<button nz-button nzType="primary" (click)="addModal()">
+  <span>Add Grup</span>
+</button>
+<br />
+
+
+<nz-modal [(nzVisible)]="addIsVisible" nzTitle="Add New Student" (nzOnCancel)="handleCancel()">
+<form [formGroup] = "angForm" (ngSubmit)="onFormSubmit()">
+
+  <div>
+    <nz-form-item>
+      <nz-form-label [nzSpan]="10" nzFor="text">Grup Name</nz-form-label>
+      <nz-form-control [nzSpan]="14">
+        <input formControlName="gName" />
+      </nz-form-control>
+    </nz-form-item>
+
+    <nz-form-item>
+        <nz-form-label [nzSpan]="10" nzFor="email">Mentor Name</nz-form-label>
+      <nz-form-control [nzSpan]="14">
+        <input formControlName="mName" />
+      </nz-form-control>
+    </nz-form-item>
+  </div>
+  <div *nzModalFooter>
+    <!-- <span>Modal Footer: </span> -->
+    <button nz-button nzType="primary" nzDanger (click)="handleCancel()">Cancel</button>
+    <button nz-button nzType="primary" type="submit" (click)="addHandleOk()" >OK</button>
+  </div>
+</form>
+
+</nz-modal>
+<!-- =========================================================================================== -->
+
+<nz-table #basicTable [nzData]="grupList" nzHideOnSinglePage>
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Grup Name</th>
+        <th>Mentor Name</th>
+        <th>Action</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let data of basicTable.data">
+        <td>{{ data.grupId }}</td>
+        <td>{{ data.grupName }}</td>
+        <td>{{ data.grupMentor }}</td>
+        <td>
+          <button nz-button [nzType]="'primary'" (click)="showModal(data.id)"><span>Edit</span></button>
+          <button nz-button nzType="primary" nzDanger (click)="delete(data.id)">Delete</button>
+        </td>
+      </tr>
+    </tbody>
+  </nz-table>
+
+<!-- ============================================================================================================= -->
+
+<nz-modal [(nzVisible)]="iisVisible" nzTitle="Update" (nzOnCancel)="handleCancel()" *ngFor="let data of grup">
+  <form [formGroup] = "angForm" (ngSubmit)="submitForm()" >
+    <div>
+      <nz-form-item>
+        <nz-form-label [nzSpan]="10" nzFor="email">ID</nz-form-label>
+        <nz-form-control [nzSpan]="14"  >
+            <input  formControlName="idGr" ngModel="{{ data.grupId }}">
+        </nz-form-control>
+      </nz-form-item>
+      <nz-form-item>
+        <nz-form-label [nzSpan]="10" nzFor="text">Grup Name</nz-form-label>
+        <nz-form-control [nzSpan]="14">
+            <input  formControlName="gName" ngModel="{{ data.grupName }}">
+        </nz-form-control>
+      </nz-form-item>
+      <nz-form-item>
+            <nz-form-label [nzSpan]="10" nzFor="email">Mentor Name</nz-form-label>
+        <nz-form-control [nzSpan]="14">
+            <input formControlName="mName" ngModel="{{ data.grupMentor }}">
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+    <div *nzModalFooter>
+      <button nz-button nzType="primary" nzDanger (click)="handleCancel()">Cancel</button>
+      <button nz-button nzType="primary" type="submit" (click)="handleOk()" >OK</button>
+    </div>
+  </form>
+</nz-modal>

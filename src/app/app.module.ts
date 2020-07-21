@@ -14,18 +14,22 @@ import { en_US } from 'ng-zorro-antd/i18n';
 import { registerLocaleData } from '@angular/common';
 import en from '@angular/common/locales/en';
 import { StudentComponent } from './pages/student/student.component';
+import { GrupComponent } from './pages/grup/grup.component';
 import { NzTableModule } from 'ng-zorro-antd/table';
 import { NzDividerModule } from 'ng-zorro-antd/divider';
 import { NzButtonModule } from 'ng-zorro-antd/button';
 import { NzModalModule } from 'ng-zorro-antd/modal';
 import { NzFormModule } from 'ng-zorro-antd/form';
+import { ReactiveFormsModule  } from '@angular/forms'
+
 
 registerLocaleData(en);
 
 @NgModule({
   declarations: [
     AppComponent,
-    StudentComponent
+    StudentComponent,
+    GrupComponent
   ],
   imports: [
     BrowserModule,
@@ -40,7 +44,8 @@ registerLocaleData(en);
     NzTableModule,
     NzButtonModule,
     NzModalModule,
-    NzFormModule
+    NzFormModule,
+    ReactiveFormsModule
   ],
   providers: [{ provide: NZ_I18N, useValue: en_US }],
   bootstrap: [AppComponent]

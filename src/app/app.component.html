@@ -15,15 +15,12 @@
       <li nz-submenu nzOpen nzTitle="Dashboard" nzIcon="dashboard">
         <ul>
           <li nz-menu-item nzMatchRouter>
-            <a routerLink="/welcome">Welcome</a>
+            <a routerLink="/student">Students</a>
           </li>
           <li nz-menu-item nzMatchRouter>
-            <a>Monitor</a>
+            <a routerLink="/grup">Grups</a>
           </li>
-          <li nz-menu-item nzMatchRouter>
-            <a>Workplace</a>
-          </li>
-        </ul>
+          </ul>
       </li>
       <li nz-submenu nzOpen nzTitle="Form" nzIcon="form">
         <ul>
@@ -47,9 +44,7 @@
     </nz-header>
     <nz-content>
       <div class="inner-content">
-        <router-outlet>
-          
-        </router-outlet>
+        <router-outlet></router-outlet>
       </div>
     </nz-content>
   </nz-layout>
