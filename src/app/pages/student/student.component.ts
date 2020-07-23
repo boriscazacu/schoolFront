@@ -1,7 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit  } from '@angular/core';
 import { StudentService } from '../services/student.service';
 import { Student } from '../models/student';
-import { ReactiveFormsModule , FormGroup, NgForm, FormControl, Validators } from '@angular/forms';
+import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { NzModalService } from 'ng-zorro-antd/modal';
+import { NzMessageService } from 'ng-zorro-antd/message';
+
 
 
 @Component({
@@ -18,7 +21,7 @@ export class StudentComponent implements OnInit {
   studentList: Student[] = [];
   student: Student[] = [];
 
-  constructor(private service: StudentService) { }
+  constructor(private service: StudentService,  private modal: NzModalService, private message: NzMessageService) { }
 
 
   ngOnInit(): void {
@@ -29,15 +32,20 @@ export class StudentComponent implements OnInit {
   delete(id: number) {
     this.service.delete(id).then(data => console.log(data)
     ).catch(e => this.service.getList().then(r => this.studentList = r));
-  }
+    this.message.create("success", `This Student has been deleted`);
 
+  }
   adding(student: Student){
     this.service.add(student).then(data => console.log(data)
     ).catch(e => this.service.getList().then(r => this.studentList = r));
+    this.message.create("success", `This Student has been added`);
+
   }
   updating(student: Student){
     this.service.update(student).then(data => console.log(data)
     ).catch(e => this.service.getList().then(r => this.studentList = r));
+    this.message.create("success", `This Student has been edited`);
+
   }
 
   
@@ -70,6 +78,17 @@ export class StudentComponent implements OnInit {
     this.addIsVisible = false;
   }
 
+  showDeleteConfirm(id: number): void {
+    this.modal.confirm({
+      nzTitle: 'Are you sure delete this Student?',
+      // nzContent: '<br><b style="color: red;">id</b>',
+      nzOkText: 'Yes',
+      nzOkType: 'danger',
+      nzOnOk: () => this.delete(id),
+      nzCancelText: 'No',
+      nzOnCancel: () => console.log('Cancel')
+    });
+  }
 
 
   //-------------------------------------------------------------- Forms
@@ -108,6 +127,7 @@ export class StudentComponent implements OnInit {
     this.adding(new Student(null,this.angForm.get('fname').value, this.angForm.get('lname').value,
     this.angForm.get('sex').value,this.angForm.get('idGr').value));
   }
+  
     
   }
 

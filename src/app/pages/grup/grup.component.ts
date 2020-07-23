@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { GrupService } from '../services/grup.service';
-import { ReactiveFormsModule , FormGroup, NgForm, FormControl, Validators } from '@angular/forms';
+import { ReactiveFormsModule , FormGroup, NgForm, FormControl, Validators, FormBuilder } from '@angular/forms';
 import { Grup } from '../models/grup';
+import { NzModalService } from 'ng-zorro-antd/modal';
+import { NzNotificationService } from 'ng-zorro-antd/notification';
 
 @Component({
   selector: 'app-grup',
@@ -18,7 +20,7 @@ export class GrupComponent implements OnInit {
   grup: Grup[] = [];
 
  
-  constructor(private service: GrupService) { }
+  constructor(private service: GrupService, private modal: NzModalService,private notification: NzNotificationService) { }
 
 
   ngOnInit(): void {
@@ -29,21 +31,35 @@ export class GrupComponent implements OnInit {
   adding(grup: Grup){
     this.service.add(grup).then(data => console.log(data)
     ).catch(e => this.service.getList().then(r => this.grupList = r));
+    this.notification.create(
+      "success",
+      'CREATE',
+      'This group has been created'
+    );
   }
 
   updating(grup: Grup){
     this.service.update(grup).then(data => console.log(data)
     ).catch(e => this.service.getList().then(r => this.grupList = r));
+    this.notification.create(
+      "success",
+      'UPDATE',
+      'This group has been updating'
+    );
   }
 
   delete(id: number) {
     this.service.delete(id).then(data => console.log(data)
     ).catch(e => this.service.getList().then(r => this.grupList = r));
+    this.notification.create(
+      "success",
+      'DELETE',
+      'This group has been deleted'
+    );
   }
 
 // ============================================================================== Modal
-  showModal(id: number): void {
-    console.log('show modall clicked!');
+  showModal1(id: number): void {
     this.iisVisible = true;
     this.grupList.forEach(element => {
       if (id == element.grupId){
@@ -66,6 +82,20 @@ export class GrupComponent implements OnInit {
   handleCancel(): void {
     console.log('Button cancel clicked!');
     this.addIsVisible = false;
+    this.iisVisible = false;
+
+  }
+
+  showDeleteConfirm(id: number): void {
+    this.modal.confirm({
+      nzTitle: 'Are you sure delete this Grup?',
+      // nzContent: '<br><b style="color: red;">id</b>',
+      nzOkText: 'Yes',
+      nzOkType: 'danger',
+      nzOnOk: () => this.delete(id),
+      nzCancelText: 'No',
+      nzOnCancel: () => console.log('Cancel')
+    });
   }
 
 

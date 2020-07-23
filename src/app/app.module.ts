@@ -20,7 +20,12 @@ import { NzDividerModule } from 'ng-zorro-antd/divider';
 import { NzButtonModule } from 'ng-zorro-antd/button';
 import { NzModalModule } from 'ng-zorro-antd/modal';
 import { NzFormModule } from 'ng-zorro-antd/form';
-import { ReactiveFormsModule  } from '@angular/forms'
+import { ReactiveFormsModule  } from '@angular/forms';
+import { NzMessageModule } from 'ng-zorro-antd/message';
+import { NzNotificationModule } from 'ng-zorro-antd/notification';
+import { NzIconModule } from 'ng-zorro-antd/icon';
+import { NzSelectModule } from 'ng-zorro-antd/select';
+
 
 
 registerLocaleData(en);
@@ -45,7 +50,11 @@ registerLocaleData(en);
     NzButtonModule,
     NzModalModule,
     NzFormModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    NzMessageModule,
+    NzNotificationModule,
+    NzIconModule,
+    NzSelectModule
   ],
   providers: [{ provide: NZ_I18N, useValue: en_US }],
   bootstrap: [AppComponent]
