@@ -6,8 +6,6 @@
 
 <nz-modal [(nzVisible)]="addIsVisible" nzTitle="Add New Student" (nzOnCancel)="handleCancel()">
 <form nz-form [formGroup] = "angForm" (ngSubmit)="onFormSubmit()">
-
-  <div>
     <nz-form-item>
       <nz-form-label [nzSpan]="8" nzFor="text">First Name</nz-form-label>
       <nz-form-control [nzSpan]="12">
@@ -16,8 +14,8 @@
     </nz-form-item>
 
     <nz-form-item>
-        <nz-form-label [nzSpan]="8" nzFor="email">Last Name</nz-form-label>
-      <nz-form-control [nzSpan]="14">
+        <nz-form-label [nzSpan]="5">Last Name</nz-form-label>
+      <nz-form-control [nzSpan]="12">
         <input nz-input formControlName="lname" />
       </nz-form-control>
     </nz-form-item>
@@ -156,3 +154,6 @@
     </div>
   </form>
 </nz-modal>
+
+
+<!-- ============================================================================== -->

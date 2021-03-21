@@ -52,7 +52,6 @@ export class StudentComponent implements OnInit {
   updating(student: Student){
     this.service.update(student).then(data => console.log(data)
     ).catch(e => this.service.getList().then(r => this.studentList = r));
-    console.log(student);
     this.message.create("success", `This Student has been edited`);
 
   }
