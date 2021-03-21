@@ -1,4 +1,5 @@
-<button nz-button nzType="primary" (click)="addModal()">
+<button nz-button  (click)="addModal()" nzSize="large">
+  <i nz-icon nzType="user-add" nzTheme="outline"></i>
   <span>Add Student</span>
 </button>
 <br />
@@ -8,32 +9,48 @@
 
   <div>
     <nz-form-item>
-      <nz-form-label [nzSpan]="10" nzFor="text">First Name</nz-form-label>
+      <nz-form-label [nzSpan]="8" nzFor="text">First Name</nz-form-label>
       <nz-form-control [nzSpan]="12">
         <input nz-input formControlName="fname" />
       </nz-form-control>
     </nz-form-item>
 
     <nz-form-item>
-        <nz-form-label [nzSpan]="10" nzFor="email">Last Name</nz-form-label>
+        <nz-form-label [nzSpan]="8" nzFor="email">Last Name</nz-form-label>
       <nz-form-control [nzSpan]="14">
         <input nz-input formControlName="lname" />
       </nz-form-control>
     </nz-form-item>
 
     <nz-form-item>
-      <nz-form-label [nzSpan]="10" nzFor="email">Sex</nz-form-label>
-      <nz-form-control [nzSpan]="14">
-        <input nz-input formControlName="sex" />              
-       </nz-form-control>
-    </nz-form-item >
+      <nz-form-label [nzSpan]="8" nzRequired>Sex</nz-form-label>
+      <nz-form-control [nzSpan]="10" nzErrorTip="Please select your gender!">
+        <nz-select
+          formControlName="sex"
+          nzPlaceHolder="Select your gender"
+        >
+          <nz-option nzValue="M" nzLabel="Male"></nz-option>
+          <nz-option nzValue="F" nzLabel="Female"></nz-option>
+        </nz-select>
+      </nz-form-control>
+    </nz-form-item>
 
     <nz-form-item>
-      <nz-form-label [nzSpan]="10" nzFor="email">Grup ID</nz-form-label>
-      <nz-form-control [nzSpan]="14">
-        <input nz-input formControlName="idGr" />             
-       </nz-form-control>
-    </nz-form-item >
+      <nz-form-label [nzSpan]="8" nzRequired>Grup</nz-form-label>
+      <nz-form-control [nzSpan]="10" nzErrorTip="Please select the grup" >
+        <nz-select
+          formControlName="idGr"
+          nzPlaceHolder="Select a grup"
+        >
+          <nz-option 
+            *ngFor="let data of grupList" 
+            nzValue="{{ data.grupId }}" 
+            nzLabel="{{ data.grupName }}">
+          </nz-option>
+        </nz-select>
+      </nz-form-control>
+    </nz-form-item>
+
   </div>
   <div *nzModalFooter>
     <!-- <span>Modal Footer: </span> -->
@@ -46,15 +63,15 @@
 
 <!-- ======================================================================================= -->
 
-<nz-table #basicTable [nzData]="studentList" nzHideOnSinglePage>
-    <thead>
-      <tr>
+<nz-table #basicTable [nzData]="studentList"  nzHideOnSinglePage>
+    <thead >
+      <tr nzAlign="center">
         <th>ID</th>
         <th>First Name</th>
         <th>Last Name</th>
         <th>Sex</th>
         <th>Grupa</th>
-        <th>Action</th>
+        <th nzAlign="center">Action</th>
       </tr>
     </thead>
     <tbody>
@@ -64,9 +81,13 @@
         <td>{{ data.lastName }}</td>
         <td>{{ data.sex }}</td>
         <td>{{ data.grupId.grupName }}</td>
-        <td>
-          <button nz-button [nzType]="'primary'" (click)="showModal(data.id)"><span>Edit</span></button>
-          <button nz-button nzType="primary" nzDanger (click)="delete(data.id)">Delete</button>
+        <td nzAlign="center">
+          <button nz-button (click)="showModal(data.id)" nzShape="round" nzSize="large">
+            <i nz-icon nzType="edit" nzTheme="fill"></i>
+          </button>
+          <button nz-button (click)="showDeleteConfirm(data.id)" nzShape="round" nzSize="large">
+            <i nz-icon nzType="delete" nzTheme="fill" ></i>
+          </button>
         </td>
       </tr>
     </tbody>
@@ -78,30 +99,56 @@
   <form nz-form [formGroup] = "angForm" (ngSubmit)="submitForm()" >
     <div >
       <nz-form-item>
-        <nz-form-label [nzSpan]="10" nzFor="email">ID</nz-form-label>
+        <nz-form-label [nzSpan]="8" nzFor="email">ID</nz-form-label>
         <nz-form-control [nzSpan]="14"  >
-            <input  formControlName="id" ngModel="{{ data.id }}">
+            <input disabled="true" formControlName="id" ngModel="{{ data.id }}">
         </nz-form-control>
       </nz-form-item>
       <nz-form-item>
-        <nz-form-label [nzSpan]="10" nzFor="text">First Name</nz-form-label>
+        <nz-form-label [nzSpan]="8" nzFor="text">First Name</nz-form-label>
         <nz-form-control [nzSpan]="14">
             <input  formControlName="fname" ngModel="{{ data.firstName }}">
         </nz-form-control>
       </nz-form-item>
       <nz-form-item>
-            <nz-form-label [nzSpan]="10" nzFor="email">Last Name</nz-form-label>
+            <nz-form-label [nzSpan]="8" nzFor="email">Last Name</nz-form-label>
         <nz-form-control [nzSpan]="14">
             <input formControlName="lname" ngModel="{{ data.lastName }}">
         </nz-form-control>
       </nz-form-item>
 
+
       <nz-form-item>
-        <nz-form-label [nzSpan]="10" nzFor="email">Sex</nz-form-label>
-        <nz-form-control [nzSpan]="14">
-            <input nz-input formControlName="sex" ngModel="{{ data.sex }}">                
+        <nz-form-label [nzSpan]="8" nzRequired>Sex</nz-form-label>
+        <nz-form-control [nzSpan]="10" nzErrorTip="Please select your gender!">
+          <nz-select
+            formControlName="sex"
+            nzPlaceHolder="Select your gender"
+            ngModel="{{ data.sex }}"
+          >
+            <nz-option nzValue="M" nzLabel="M"></nz-option>
+            <nz-option nzValue="F" nzLabel="F"></nz-option>
+          </nz-select>
         </nz-form-control>
-      </nz-form-item >
+      </nz-form-item>
+
+      <nz-form-item>
+        <nz-form-label [nzSpan]="8" >Grup</nz-form-label>
+        <nz-form-control [nzSpan]="10" nzErrorTip="Please select the grup">
+          <nz-select
+            formControlName="idGr"
+            ngModel='{{ data.grupId.grupId }}'
+          >
+            <nz-option 
+              *ngFor="let data of grupList" 
+              nzValue="{{ data.grupId }}" 
+              nzLabel="{{ data.grupName }}">
+            </nz-option>
+            <nz-option nzValue="{{ data.grupId.grupId }}" nzLabel="{{ data.grupId.grupName }}" nzHide ></nz-option>
+          </nz-select>
+        </nz-form-control>
+      </nz-form-item>
+
     </div>
     <div *nzModalFooter>
       <button nz-button nzType="primary" nzDanger (click)="handleCancel()">Cancel</button>

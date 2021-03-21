@@ -7,6 +7,7 @@
 }
 [nz-table]{
   text-align: center;
+  align-content: center;
 }
 .nz-form-label{
 margin-top: 10px;

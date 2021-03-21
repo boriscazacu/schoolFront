@@ -1,26 +1,28 @@
-<button nz-button nzType="primary" (click)="addModal()">
+<button nz-button  (click)="addModal()"nzSize="large">
+  <i nz-icon nzType="appstore-add" nzTheme="outline"></i>
   <span>Add Grup</span>
 </button>
 <br />
 
 
-<nz-modal [(nzVisible)]="addIsVisible" nzTitle="Add New Student" (nzOnCancel)="handleCancel()">
-<form [formGroup] = "angForm" (ngSubmit)="onFormSubmit()">
+<nz-modal [(nzVisible)]="addIsVisible" nzTitle="Add new Grup" (nzOnCancel)="handleCancel()">
+<form nz-form [formGroup] = "angForm" (ngSubmit)="onFormSubmit()">
 
   <div>
     <nz-form-item>
-      <nz-form-label [nzSpan]="10" nzFor="text">Grup Name</nz-form-label>
-      <nz-form-control [nzSpan]="14">
+      <nz-form-label [nzSpan]="10" >Grup Name</nz-form-label>
+      <nz-form-control [nzSpan]="14" nzErrorTip="Please input your name">
         <input formControlName="gName" />
       </nz-form-control>
     </nz-form-item>
 
     <nz-form-item>
-        <nz-form-label [nzSpan]="10" nzFor="email">Mentor Name</nz-form-label>
+        <nz-form-label [nzSpan]="10">Mentor Name</nz-form-label>
       <nz-form-control [nzSpan]="14">
         <input formControlName="mName" />
       </nz-form-control>
     </nz-form-item>
+
   </div>
   <div *nzModalFooter>
     <!-- <span>Modal Footer: </span> -->
@@ -33,12 +35,12 @@
 <!-- =========================================================================================== -->
 
 <nz-table #basicTable [nzData]="grupList" nzHideOnSinglePage>
-    <thead>
+    <thead nzAlign="center" >
       <tr>
         <th>ID</th>
         <th>Grup Name</th>
         <th>Mentor Name</th>
-        <th>Action</th>
+        <th >Action</th>
       </tr>
     </thead>
     <tbody>
@@ -47,8 +49,12 @@
         <td>{{ data.grupName }}</td>
         <td>{{ data.grupMentor }}</td>
         <td>
-          <button nz-button [nzType]="'primary'" (click)="showModal(data.id)"><span>Edit</span></button>
-          <button nz-button nzType="primary" nzDanger (click)="delete(data.id)">Delete</button>
+          <button nz-button  (click)="showModal1(data.grupId)" nzShape="round" nzSize="large">
+            <i nz-icon nzType="edit" nzTheme="fill"></i>
+          </button>
+          <button nz-button  (click)="showDeleteConfirm(data.grupId)" nzShape="round" nzSize="large">
+            <i nz-icon nzType="delete" nzTheme="fill" ></i>
+          </button>
         </td>
       </tr>
     </tbody>
@@ -60,19 +66,19 @@
   <form [formGroup] = "angForm" (ngSubmit)="submitForm()" >
     <div>
       <nz-form-item>
-        <nz-form-label [nzSpan]="10" nzFor="email">ID</nz-form-label>
+        <nz-form-label [nzSpan]="8" nzFor="email">ID</nz-form-label>
         <nz-form-control [nzSpan]="14"  >
-            <input  formControlName="idGr" ngModel="{{ data.grupId }}">
+            <input disabled="true" formControlName="idGr" ngModel="{{ data.grupId }}">
         </nz-form-control>
       </nz-form-item>
       <nz-form-item>
-        <nz-form-label [nzSpan]="10" nzFor="text">Grup Name</nz-form-label>
+        <nz-form-label [nzSpan]="8" nzFor="text">Grup Name</nz-form-label>
         <nz-form-control [nzSpan]="14">
             <input  formControlName="gName" ngModel="{{ data.grupName }}">
         </nz-form-control>
       </nz-form-item>
       <nz-form-item>
-            <nz-form-label [nzSpan]="10" nzFor="email">Mentor Name</nz-form-label>
+            <nz-form-label [nzSpan]="8" nzFor="email">Mentor Name</nz-form-label>
         <nz-form-control [nzSpan]="14">
             <input formControlName="mName" ngModel="{{ data.grupMentor }}">
         </nz-form-control>

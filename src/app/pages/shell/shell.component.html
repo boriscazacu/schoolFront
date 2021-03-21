@@ -1,0 +1,20 @@
+<nz-layout class="layout">
+    <nz-header>
+      <div class="logo"></div>
+      <ul nz-menu nzTheme="dark" nzMode="horizontal">
+        <li [routerLink]="['/santa']" nz-menu-item>Home</li>
+        <li nz-menu-item>Refresh</li>
+        <li [routerLink]="['/results']" nz-menu-item>Resultate</li>
+        <li [routerLink]="['/login']" nz-menu-item>Logout</li>
+        <li nz-menu-item>Salut, {{ name }}</li>
+      </ul>
+    </nz-header>
+    <nz-content>
+        <nz-spin class="inner-content" [nzSpinning]="isLoading" [nzDelay]="500">
+            <router-outlet></router-outlet>
+        </nz-spin>
+    </nz-content>
+    <nz-footer>
+        <em>Disigned by Boris Cazacu ©2020</em>
+    </nz-footer>
+</nz-layout>

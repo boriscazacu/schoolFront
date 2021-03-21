@@ -15,12 +15,21 @@ import { registerLocaleData } from '@angular/common';
 import en from '@angular/common/locales/en';
 import { StudentComponent } from './pages/student/student.component';
 import { GrupComponent } from './pages/grup/grup.component';
+import { SecretSantaComponent } from './pages/secret-santa/secret-santa.component';
+import { ResultsComponent } from './pages/results/results.component';
+import { LoginComponent } from './pages/login/login.component';
+import { ShellComponent } from './pages/shell/shell.component';
 import { NzTableModule } from 'ng-zorro-antd/table';
 import { NzDividerModule } from 'ng-zorro-antd/divider';
 import { NzButtonModule } from 'ng-zorro-antd/button';
 import { NzModalModule } from 'ng-zorro-antd/modal';
 import { NzFormModule } from 'ng-zorro-antd/form';
-import { ReactiveFormsModule  } from '@angular/forms'
+import { ReactiveFormsModule  } from '@angular/forms';
+import { NzMessageModule } from 'ng-zorro-antd/message';
+import { NzNotificationModule } from 'ng-zorro-antd/notification';
+import { NzIconModule } from 'ng-zorro-antd/icon';
+import { NzSelectModule } from 'ng-zorro-antd/select';
+import { NzSpinModule } from 'ng-zorro-antd/spin';
 
 
 registerLocaleData(en);
@@ -29,7 +38,11 @@ registerLocaleData(en);
   declarations: [
     AppComponent,
     StudentComponent,
-    GrupComponent
+    GrupComponent,
+    SecretSantaComponent,
+    ResultsComponent,
+    LoginComponent,
+    ShellComponent,
   ],
   imports: [
     BrowserModule,
@@ -45,7 +58,12 @@ registerLocaleData(en);
     NzButtonModule,
     NzModalModule,
     NzFormModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    NzMessageModule,
+    NzNotificationModule,
+    NzIconModule,
+    NzSelectModule,
+    NzSpinModule
   ],
   providers: [{ provide: NZ_I18N, useValue: en_US }],
   bootstrap: [AppComponent]

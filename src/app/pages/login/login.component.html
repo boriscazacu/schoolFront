@@ -1,0 +1,31 @@
+<div class="container container-align"> 
+  <div class="child">
+    <h2 class="txt">Conectează-te</h2>
+  </div>
+  <div class="child">
+    <form nz-form [nzLayout]="'verticals'" [formGroup]="validateForm" (ngSubmit)="submitForm()" class="mr">
+      <nz-form-item>
+        <nz-form-control nzErrorTip="Please input your username!">
+            <input formControlName="userName" nz-input placeholder="Username" />
+        </nz-form-control>
+      </nz-form-item>
+      <nz-form-item>
+        <nz-form-control nzErrorTip="Please input your Password!">
+            <input formControlName="password" nz-input  placeholder="Password" />
+        </nz-form-control>
+      </nz-form-item>
+      <nz-form-item>
+        <nz-form-control>
+          <button nz-button nzType="primary" class="login-form-button login-form-margin">Participă</button>
+        </nz-form-control>
+      </nz-form-item>
+    </form>
+  </div>
+</div>
+
+<!-- <div *ngIf="!isLogin">
+  <app-secret-santa
+  [nameOfSanta]="name"
+  >
+  </app-secret-santa>
+</div> -->

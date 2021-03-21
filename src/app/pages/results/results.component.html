@@ -1,0 +1,50 @@
+<div class="horisontal-center" >
+      <h1>Rezultatele extragerii</h1>
+      <nz-table #basicTable [nzData]="resultsList" nzHideOnSinglePage>
+        <thead nzAlign="center" >
+          <tr>
+            <th>ID</th>
+            <th>Name of Secret Santa</th>
+            <th >Name of Participant</th>
+            <th >Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let data of basicTable.data" nzShowRowSelection="true">
+            <td>{{ data.id }}</td>
+            <td>{{ data.secretSanta }}</td>
+            <td>{{ data.participant }}</td>
+            <td>
+              <a (click)="editData(data)">Edit</a>
+              <nz-divider nzType="vertical"></nz-divider>
+              <a (click)="delete(data.id)">Delete</a>
+            </td>
+          </tr>
+        </tbody>
+      </nz-table>
+    <br/>
+</div>
+
+
+<nz-modal [(nzVisible)]="isVisible" nzTitle="Editează" (nzOnCancel)="handleCancel()">
+  <form nz-form [formGroup] = "resultForm" (ngSubmit)="onFormSubmit()">
+    <div>
+      <nz-form-item>
+        <nz-form-label [nzSpan]="8" >Santa</nz-form-label>
+        <nz-form-control [nzSpan]="14" nzErrorTip="Câmpul este gol">
+          <input formControlName="santa" />
+        </nz-form-control>
+      </nz-form-item>
+      <nz-form-item>
+        <nz-form-label [nzSpan]="8" >Participant</nz-form-label>
+        <nz-form-control [nzSpan]="14" nzErrorTip="Câmpul este gol">
+          <input  formControlName="participant" />
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+    <div *nzModalFooter>
+      <button nz-button nzType="primary" nzDanger (click)="handleCancel()">Cancel</button>
+      <button nz-button nzType="primary" type="submit" (click)="edit()">OK</button>
+    </div>
+  </form>    
+</nz-modal>

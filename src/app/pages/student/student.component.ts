@@ -1,7 +1,12 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit  } from '@angular/core';
 import { StudentService } from '../services/student.service';
 import { Student } from '../models/student';
-import { ReactiveFormsModule , FormGroup, NgForm, FormControl, Validators } from '@angular/forms';
+import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { NzModalService } from 'ng-zorro-antd/modal';
+import { NzMessageService } from 'ng-zorro-antd/message';
+import { Grup } from '../models/grup';
+import { GrupService } from '../services/grup.service';
+
 
 
 @Component({
@@ -16,28 +21,40 @@ export class StudentComponent implements OnInit {
   isVisible = false;
   addIsVisible = false;
   studentList: Student[] = [];
+  grupList: Grup[] = [];
   student: Student[] = [];
 
-  constructor(private service: StudentService) { }
+  constructor(private service: StudentService, private gruService: GrupService, 
+    private modal: NzModalService, private message: NzMessageService) { }
 
 
   ngOnInit(): void {
-    this.service.getList().then(data => {this.studentList = data; console.log(this.studentList); }
-    );
+    this.service.getList().then(data => {
+      this.studentList = data;
+    });
+    this.gruService.getList().then(data => {
+      this.grupList = data;
+    });
   }
 
   delete(id: number) {
     this.service.delete(id).then(data => console.log(data)
     ).catch(e => this.service.getList().then(r => this.studentList = r));
-  }
+    this.message.create("success", `This Student has been deleted`);
 
+  }
   adding(student: Student){
     this.service.add(student).then(data => console.log(data)
     ).catch(e => this.service.getList().then(r => this.studentList = r));
+    this.message.create("success", `This Student has been added`);
+
   }
   updating(student: Student){
     this.service.update(student).then(data => console.log(data)
     ).catch(e => this.service.getList().then(r => this.studentList = r));
+    console.log(student);
+    this.message.create("success", `This Student has been edited`);
+
   }
 
   
@@ -70,6 +87,17 @@ export class StudentComponent implements OnInit {
     this.addIsVisible = false;
   }
 
+  showDeleteConfirm(id: number): void {
+    this.modal.confirm({
+      nzTitle: 'Are you sure delete this Student?',
+      // nzContent: '<br><b style="color: red;">id</b>',
+      nzOkText: 'Yes',
+      nzOkType: 'danger',
+      nzOnOk: () => this.delete(id),
+      nzCancelText: 'No',
+      nzOnCancel: () => console.log('Cancel')
+    });
+  }
 
 
   //-------------------------------------------------------------- Forms
@@ -102,12 +130,13 @@ export class StudentComponent implements OnInit {
   }
   submitForm(): void{
     this.updating(new Student(this.angForm.get('id').value,this.angForm.get('fname').value, 
-    this.angForm.get('lname').value,this.angForm.get('sex').value,null));
+    this.angForm.get('lname').value,this.angForm.get('sex').value, this.angForm.get('idGr').value));
   }
   onFormSubmit(): void {
     this.adding(new Student(null,this.angForm.get('fname').value, this.angForm.get('lname').value,
     this.angForm.get('sex').value,this.angForm.get('idGr').value));
   }
+  
     
   }
 
